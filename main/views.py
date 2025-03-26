@@ -5,4 +5,4 @@ def index(request):
     return render(request, 'main/main_before_registration.html')
 
 def about(request):
-    return HttpResponse('About page')
+    return render(request, 'main/about.html')
