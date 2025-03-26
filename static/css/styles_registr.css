@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #6A6F4C;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 500px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.card h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card p {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+form label {
+    margin-left: -10px;
+    background: #ffffff;
+    display: block;
+    text-align: left;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+form input {
+    margin-left: -10px;
+    background: #ffffff;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.register-button {
+    width: 100%; /* Подстраиваем кнопку под содержимое */
+    padding: 12px; /* Уменьшаем высоту */
+    background-color: #5E2611;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none; /* Убираем подчеркивание */
+    display: inline-block;
+    text-align: center;
+}
+
+.register-button:hover {
+    background-color: #9f3f20;
+    text-decoration: none; /* Убеждаемся, что при наведении подчеркивание не появляется */
+}
+
+/* Если кнопка - это ссылка */
+a.register-button {
+    text-decoration: none;
+    color: white;
+}
+
+
+.back-to-login {
+    display: block;
+    margin-top: 15px;
+    color: #6A6F4C;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-to-login:hover {
+    color: #8B4513;
+    text-decoration: underline;
+}

@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap&subset=cyrillic');
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    background: #F0E4DF;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none; /* Убираем стандартное подчеркивание */
+    color: #000000; /* Цвет текста */
+    position: relative; /* Нужно для псевдоэлемента */
+}
+
+/* Подчеркивание при наведении */
+a:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Расстояние от текста */
+    width: 100%;
+    height: 2px; /* Толщина подчеркивания */
+    background-color: #2f0f05; /* Бежевый цвет подчеркивания */
+}
+.left-nav a {
+    text-decoration: none; /* Убираем стандартное подчеркивание */
+    color: #000; /* Цвет текста */
+    position: relative;
+}
+
+/* Подчеркивание при наведении */
+.left-nav a:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #2f0f05; /* Бежевый цвет */
+}
+
+/* Подчеркивание активной кнопки */
+.left-nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #2f0f05; /* Бежевый цвет */
+}
+
+.about {
+    position: relative;
+}
+
+/* Всегда подчеркнута */
+.about::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #2f0f05; /* Цвет подчеркивания */
+}
+
+.wrapper {
+    background-color: #F0E4DF;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.container_1 {
+    width: 1400px;
+    margin: 0 auto;
+    padding: 0;
+    color: #2f0f05;
+}
+
+header {
+    padding: 50px 0;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .left-nav,
+header .right-nav {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header .left-nav {
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: -50px; /* Регулируйте значение, чтобы сместить левее */
+}
+
+header .right-nav {
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.container_2 {
+    color: #2f0f05;
+    background: #ffffff;
+    width: 100%;
+    max-width: 1400px;
+    margin: 10px auto;
+    padding: 40px;
+    border-radius: 20px;
+}
+.image-section{
+    margin-left: 900px;
+    margin-top: -200px;
+}
+.motivation-text {
+    margin-left: 800px;
+}
+#add-habit-btn {
+    text-transform: none;
+    background-color: #5E2611; /* Темно-красный цвет */
+    color: white; /* Белый текст */
+    padding: 12px 24px; /* Отступы внутри кнопки */
+    font-size: 1.2rem; /* Размер текста */
+    font-weight: 600;
+    border: none; /* Убираем границы */
+    border-radius: 25px; /* Делаем кнопку более закругленной */
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Тень */
+    display: block;
+    width: fit-content; /* Подстраиваем ширину под содержимое */
+}
+
+#add-habit-btn:hover {
+    background-color: #9f3f20; /* Изменение цвета при наведении */
+    transform: scale(1.05); /* Легкое увеличение */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Увеличенная тень */
+}
+
+#add-habit-btn:active {
+    transform: scale(0.95); /* Эффект нажатия */
+}
