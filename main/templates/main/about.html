@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About</title>
-    <link rel="stylesheet" href="css/styles_about.css">
+    <link rel="stylesheet" href="{% static 'css/styles_about.css' %}">
 </head>
 <body>
 <div class="wrapper">
@@ -27,7 +29,7 @@
 
 <div class="about_container">
     <div class="flower_left">
-        <img src="img/flowers_2.svg" alt="">
+        <img src="{% static 'img/flowers_2.svg' %}" alt="">
     </div>
     <h1>Nice to meet you!</h1>
     <h2>Our names are Sophia and Stefania!</h2>
@@ -35,10 +37,10 @@
     <h4>That is why we created this website</h4>
     <p>&copy; 2025 HabitFlow. All rights reserved.</p>
     <div class="flower_right">
-        <img src="img/flowers_2.svg" alt="">
+        <img src="{% static 'img/flowers_2.svg' %}" alt="">
     </div>
     <div class="sofia">
-        <img src="img/sofia.svg" alt="">
+        <img src="{% static 'img/sofia.svg' %}" alt="">
     </div>
 </div>
 

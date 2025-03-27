@@ -13,10 +13,10 @@
     <div class="card">
         <div class="left-side">
             <div class="illustration_fon">
-                <img src="img/fon_illustation_for_registration.svg" alt="Background Illustration">
+                <img src="{% static 'img/fon_illustation_for_registration.svg'%}" alt="Background Illustration">
             </div>
             <div class="illustration">
-                <img src="img/img_register.svg" alt="Main Illustration">
+                <img src="{% static 'img/img_register.svg' %}" alt="Main Illustration">
             </div>
         </div>
         <div class="right-side">
@@ -38,7 +38,7 @@
             </form>
             <form onsubmit="event.preventDefault(); register();">
 <!--                <button type="submit" class="register">Register</button>-->
-                <a href="registr.html" class="register">Register</a>
+                <a href="{% url 'users:registration' %}" class="register">Register</a>
             </form>
 
         </div>

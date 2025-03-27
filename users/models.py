@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
 
@@ -14,7 +13,7 @@ class User(AbstractUser):
     username = None
     
     age = models.PositiveIntegerField(
-        _('Age'),
+        'Age',
         validators=[
             MinValueValidator(6),
             MaxValueValidator(120)
@@ -24,7 +23,7 @@ class User(AbstractUser):
     )
 
     gender = models.CharField(
-        _('Gender'),
+        'Gender',
         max_length=1,
         choices=GENDER_CHOICES,
         blank=True, 
@@ -32,17 +31,17 @@ class User(AbstractUser):
     )
 
     email = models.EmailField(
-        _('Email address'),
+        'Email address',
         unique=True,
         error_messages={
-            'unique': _("A user with that email already exists."),
+            'unique': "A user with that email already exists.",
         }
     )
 
 
     class Meta:
-        verbose_name = _('User')
-        verbose_name_plural = _('Users')
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
         ordering = ['last_name', 'first_name']
     
     def __str__(self):
