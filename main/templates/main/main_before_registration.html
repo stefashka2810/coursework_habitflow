@@ -12,13 +12,13 @@
         <header class="container">
             <nav>
                 <ul class="left-nav">
-                    <li class="profile"><a href="registration.html">Profile</a></li>
-                    <li><a href="registration.html">Habit</a></li>
-                    <li><a href="registration.html">Diagrams</a></li>
+                    <li class="profile"><a href="{% url 'users:login'%}">Profile</a></li>
+                    <li><a href="{% url 'users:login'%}">Habit</a></li>
+                    <li><a href="{% url 'users:login'%}">Diagrams</a></li>
                 </ul>
                 <span class="logo">HabitFlow</span>
                 <ul class="right-nav">
-                    <li><a href="registration.html">Settings</a></li>
+                    <li><a href="{% url 'users:login'%}">Settings</a></li>
                     <li><a href="{% url 'main:about' %}">About</a></li>
                 </ul>
             </nav>
@@ -29,7 +29,7 @@
             <h1>Manage your life: track your habits and achieve your goals</h1>
             <h2>Sign up, add your habits and mark their completion</h2>
             <h3>Create charts to see your progress and reach new heights</h3>
-            <a class="bth" a href="registration.html">Start</a>
+            <a class="bth" a href="{% url 'users:login'%}">Start</a>
         </div>
         <img src="img/daily.svg" alt="">
     </div>

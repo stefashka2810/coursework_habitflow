@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'main',
     'habits',
+    'users',
 ]
 
 MIDDLEWARE = [

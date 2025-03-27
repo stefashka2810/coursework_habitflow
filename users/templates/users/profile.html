@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="css/styles_profile.css">
+</head>
+<body>
+<div class="wrapper">
+  <header class="container_1">
+    <nav>
+      <ul class="left-nav">
+        <li class="profile"><a href="#" class="active">Profile</a></li>
+        <li><a href="#" id="habits-button">Habit</a></li>
+        <li><a href="#">Diagrams</a></li>
+      </ul>
+      <!-- ЛОГОТИП HabitFlow с обработчиком клика -->
+      <span class="logo" id="home-button">HabitFlow</span>
+      <ul class="right-nav">
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<!-- Основное содержимое -->
+<div class="container_2">
+  <div class="content">
+    <div class="text-section">
+      <h1 id="profile-greeting">Hello, user</h1>
+      <h2>Your habits:</h2>
+      <ul id="habits-list"></ul>
+      <p id="no-habits-message" style="display: none;">You don't have any habits yet, add them!</p>
+      <button id="add-habit-btn" style="display: none;" onclick="window.location.href='add_habitat.html'">Add habit</button>
+    </div>
+    <div class="image-section">
+      <img src="img/profile.svg" alt="">
+    </div>
+  </div>
+  <p class="motivation-text">Achieve your goals and become the best version of yourself!</p>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const profileGreeting = document.getElementById("profile-greeting");
+    const habitsList = document.getElementById("habits-list");
+    const noHabitsMessage = document.getElementById("no-habits-message");
+    const addHabitBtn = document.getElementById("add-habit-btn");
+    const habitsButton = document.getElementById("habits-button");
+    const homeButton = document.getElementById("home-button"); // Добавляем обработчик клика для логотипа
+
+    // Проверяем, есть ли пользователь
+    if (!user) {
+      alert("You need to register first!");
+      window.location.href = "registration.html";
+      return;
+    }
+
+    // Устанавливаем приветствие
+    profileGreeting.textContent = `Hello, ${user.firstName} ${user.lastName}!`;
+
+    // Загружаем привычки конкретного пользователя из localStorage
+    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
+
+    if (userHabits.length > 0) {
+      habitsList.innerHTML = ""; // Очищаем список перед добавлением новых элементов
+
+      userHabits.forEach(habit => {
+        let listItem = document.createElement("li");
+        listItem.textContent = habit.name; // Выводим только название привычки
+        habitsList.appendChild(listItem);
+      });
+
+      noHabitsMessage.style.display = "none";
+      addHabitBtn.style.display = "none";
+    } else {
+      noHabitsMessage.style.display = "block";
+      addHabitBtn.style.display = "block";
+    }
+
+    // Добавляем обработчик на кнопку "Habit"
+    habitsButton.addEventListener("click", function (event) {
+      event.preventDefault();
+      if (userHabits.length > 0) {
+        window.location.href = "list_habitats.html"; // Если есть привычки
+      } else {
+        window.location.href = "habitat_without_value.html"; // Если привычек нет
+      }
+    });
+
+    // Добавляем обработчик на логотип "HabitFlow"
+    homeButton.addEventListener("click", function () {
+      window.location.href = "main_after_registration.html";
+    });
+  });
+</script>
+
+</body>
+</html>

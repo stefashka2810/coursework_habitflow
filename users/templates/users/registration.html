@@ -1,0 +1,49 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/styles_registration.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <div class="left-side">
+            <div class="illustration_fon">
+                <img src="img/fon_illustation_for_registration.svg" alt="Background Illustration">
+            </div>
+            <div class="illustration">
+                <img src="img/img_register.svg" alt="Main Illustration">
+            </div>
+        </div>
+        <div class="right-side">
+            <h1>Welcome Back!</h1>
+            <p>Please login or register to continue</p>
+
+            <!-- Форма входа -->
+            <form onsubmit="event.preventDefault(); login();">
+                <label for="login-email">Email Address</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+                <label for="login-password">Password</label>
+
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+                <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+                <button type="submit" class="login">Login</button>
+                <p id="login-error" class="error-message"></p>
+
+                <p class="or">or</p>
+            </form>
+            <form onsubmit="event.preventDefault(); register();">
+<!--                <button type="submit" class="register">Register</button>-->
+                <a href="registr.html" class="register">Register</a>
+            </form>
+
+        </div>
+    </div>
+</div>
+<script src="script_registration.js"></script>
+</body>
+</html>
