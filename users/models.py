@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import BaseUserManager
+
 
 class User(AbstractUser):
 
@@ -9,8 +11,6 @@ class User(AbstractUser):
         ('F', 'Female'),
         ('O', 'Other'),
     ]
-    
-    username = None
     
     age = models.PositiveIntegerField(
         'Age',
@@ -37,7 +37,6 @@ class User(AbstractUser):
             'unique': "A user with that email already exists.",
         }
     )
-
 
     class Meta:
         verbose_name = 'User'
