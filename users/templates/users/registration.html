@@ -13,10 +13,10 @@
     <div class="card">
         <div class="left-side">
             <div class="illustration_fon">
-                <img src="img/fon_illustation_for_registration.svg" alt="Background Illustration">
+                <img src="{% static 'img/fon_illustation_for_registration.svg'%}" alt="Background Illustration">
             </div>
             <div class="illustration">
-                <img src="img/img_register.svg" alt="Main Illustration">
+                <img src="{% static 'img/img_register.svg'%}" alt="Main Illustration">
             </div>
         </div>
         <div class="right-side">
@@ -26,22 +26,30 @@
             <!-- Форма входа -->
             <form action = "{% url "users:login" %}" method = "post">
                 {% csrf_token %}
+                {% if request.GET.next %}
+                <input type="hidden" name="next" value={{request.GET.next}}>
+                {% endif %}
 
-                <label for="login-email" class = "form-label">Email Address</label>
-                <input type="email" class = "form-control" name = "username" id="login-email" placeholder="Enter your email" required>
+                <label for="id_username" class="form-label">Username</label>
+                <input type="text" class="form-control"
+                value="{% if form.username.value %}{{ form.username.value }}{% endif %}"
+                name="username" id="id_username"
+                placeholder="Enter your username"
+                required>
 
                 <label for="login-password" class = "form-label">Password</label>
-                <input type="password" class = "form-control" name = "password" id="login-password" placeholder="Enter your password" required>
+                <input type="password" class = "form-control"
+                name = "password" id="login-password" 
+                placeholder="Enter your password" 
+                required>
 
                 <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
                 <button type="submit" class="login">Login</button>
-                <p id="login-error" class="error-message"></p>
 
                 <p class="or">or</p>
             </form>
-            <form onsubmit="event.preventDefault(); register();">
-<!--                <button type="submit" class="register">Register</button>-->
-                <a href="registr.html" class="register">Register</a>
+            <button type="submit" class="register">Register</button>
+            <a href="{% url 'users:registration'%}" class="register"></a>
             </form>
 
         </div>
