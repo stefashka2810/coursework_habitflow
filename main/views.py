@@ -5,3 +5,6 @@ def index(request):
 
 def about(request):
     return render(request, 'main/about.html')
+
+def main_after_registration(request):
+    return render(request, 'main/main_after_registration.html')

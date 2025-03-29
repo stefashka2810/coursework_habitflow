@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="css/styles_settings.css">
+</head>
+<body>
+<div class="wrapper">
+  <header class="container_1">
+    <nav>
+      <ul class="left-nav">
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="#" id="habits-button">Habit</a></li>
+        <li><a href="#">Diagrams</a></li>
+      </ul>
+      <span class="logo">HabitFlow</span>
+      <ul class="right-nav">
+        <li class="settings"><a href="#" class="active">Settings</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="container_2">
+  <div class="settings-container">
+    <form id="settings-form">
+      <div class="input-group">
+        <input type="text" id="first-name" readonly>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="last-name" readonly>
+      </div>
+
+      <div class="input-group">
+        <input type="number" id="age" min="1" placeholder="Age">
+        <label for="age" class="field-label">Age</label>
+      </div>
+
+      <div class="input-group">
+        <select id="gender">
+          <option value="" selected></option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <label for="gender" class="field-label">Male or Female</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="email" readonly placeholder="Email Address">
+      </div>
+
+      <button type="submit" class="save-button">Save</button>
+      <button type="button" class="exit-button" onclick="logout()">Exit</button>
+    </form>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let storedEmails = Object.keys(localStorage).find(key => key.includes("@")); // Находим email в LocalStorage
+    let user = storedEmails ? JSON.parse(localStorage.getItem(storedEmails)) : null;
+
+    if (!user) {
+      alert("No user data found! Redirecting to login...");
+      window.location.href = "registration.html";
+      return;
+    }
+
+    document.getElementById("first-name").value = user.firstName || "";
+    document.getElementById("last-name").value = user.lastName || "";
+    document.getElementById("email").value = storedEmails || "No email found";
+    document.getElementById("age").value = user.age || "";
+    document.getElementById("gender").value = user.gender || "";
+
+    document.getElementById("settings-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      user.age = document.getElementById("age").value;
+      user.gender = document.getElementById("gender").value;
+
+      localStorage.setItem(storedEmails, JSON.stringify(user));
+      alert("Settings saved!");
+    });
+
+    document.getElementById("age").addEventListener("input", function () {
+      toggleLabel(this);
+    });
+
+    document.getElementById("gender").addEventListener("change", function () {
+      toggleLabel(this);
+    });
+
+    function toggleLabel(input) {
+      let label = input.nextElementSibling;
+      label.style.display = input.value ? "none" : "block";
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem(Object.keys(localStorage).find(key => key.includes("@")));
+    alert("You have been logged out.");
+    window.location.href = "main_before_registration.html";
+  }
+
+
+    // Функция для скрытия подписи, если поле заполнено
+    function checkLabels() {
+      document.querySelectorAll(".input-group").forEach(group => {
+        let input = group.querySelector("input, select");
+        let label = group.querySelector("label");
+        if (input.value) {
+          label.style.display = "none";
+        } else {
+          label.style.display = "block";
+        }
+      });
+    }
+
+    // Проверяем скрытие подписей при загрузке
+    checkLabels();
+
+    // Отслеживаем изменение значений
+    ageField.addEventListener("input", checkLabels);
+    genderField.addEventListener("change", checkLabels);
+
+    document.getElementById("settings-form").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      user.age = ageField.value;
+      user.gender = genderField.value;
+      localStorage.setItem("user", JSON.stringify(user));
+
+      alert("Settings saved!");
+      checkLabels();
+
+
+  // Функция выхода
+  function logout() {
+    localStorage.removeItem("user");
+    alert("You have been logged out.");
+    window.location.href = "main_before_registration.html";
+  }
+  });
+  });
+
+
+</script>
+
+</body>
+</html>

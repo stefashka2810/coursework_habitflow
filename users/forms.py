@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from .models import User
 
 class UserRegisterForm(UserCreationForm):
@@ -33,5 +34,22 @@ class UserRegisterForm(UserCreationForm):
 
 
 class UserLoginForm(AuthenticationForm):
+
+    username = forms.CharField(
+        label="Email",
+        widget=forms.EmailInput(attrs={'autofocus': True}),
+        validators=[validate_email]
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"})
+    )
+    
+    # error_messages = {
+    #     'invalid_login': "Invalid email or password",
+    #     'inactive': "This account is inactive.",
+    # }
+
     class Meta:
         model = User
+        fields = ['username', 'password']

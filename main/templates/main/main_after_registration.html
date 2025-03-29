@@ -1,0 +1,114 @@
+  {% load static %}
+  
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Main After Registration</title>
+    <link rel="stylesheet" href="{%static 'css/styles_main_after_registration.css'%}">
+  </head>
+  <body>
+  <div class="wrapper">
+    <header class="container">
+      <nav>
+        <ul class="left-nav">
+          <li class="profile"><a href="#" id="profile-button">Profile</a></li>
+          <li><a href="#" id="habits-button">Habit</a></li>
+          <li><a href="#">Diagrams</a></li>
+        </ul>
+        <span class="logo">HabitFlow</span>
+        <ul class="right-nav">
+          <li><a href="settings.html">Settings</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </header>
+  </div>
+
+  <!-- Основной контент -->
+  <div class="hero-section">
+    <h1>Thanks to us, you will not lose your motivation<br>
+      and will be able to both instill healthy habits<br>
+      and get rid of bad ones.</h1>
+  </div>
+
+  <!-- Блок полезных привычек -->
+  <div class="habits-container">
+    <h2>People often want to instill useful habits.<br>
+      Here are some commonly instilled habits, maybe you'll like some of them</h2>
+  </div>
+  <div class="habit-icons">
+    <div class="habit-item">
+      <img src="img/water.svg" alt="Drink water">
+      <p>Drink water every day</p>
+    </div>
+    <div class="habit-item">
+      <img src="img/gym.svg" alt="Go to the gym">
+      <p>Go to the gym every week</p>
+    </div>
+    <div class="habit-item">
+      <img src="img/wake_up.svg" alt="Wake up early">
+      <p>Wake up early every day</p>
+    </div>
+  </div>
+
+  <!-- Блок вредных привычек -->
+  <div class="habits-container">
+    <h2>Some people get rid of bad habits</h2>
+  </div>
+  <div class="habit-icons_1">
+    <div class="habit-item">
+      <img src="img/smoking.svg" alt="Smoking">
+      <p>Smoking</p>
+    </div>
+    <div class="habit-item">
+      <img src="img/sweets.svg" alt="Eat a lot of sweets">
+      <p>Eat a lot of sweets</p>
+    </div>
+    <div class="habit-item">
+      <img src="img/game.svg" alt="Gambling addiction">
+      <p>Gambling addiction</p>
+    </div>
+  </div>
+  <footer>
+    <p>Completed as part of a course project</p>
+  </footer>
+  {% comment %} <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const profileButton = document.getElementById("profile-button");
+      const habitsButton = document.getElementById("habits-button");
+
+      let currentUser = JSON.parse(localStorage.getItem("user")); // Получаем текущего пользователя
+
+      if (!currentUser) {
+        alert("You need to register first!");
+        window.location.href = "registration.html"; // Если нет пользователя, перенаправляем на регистрацию
+        return;
+      }
+
+      let userHabits = JSON.parse(localStorage.getItem(`habits_${currentUser.email}`)) || [];
+
+      // Переход на страницу Profile
+      if (profileButton) {
+        profileButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          window.location.href = "profile.html"; // Всегда переходит в профиль
+        });
+      }
+
+      // Переключение на вкладку "Habits"
+      if (habitsButton) {
+        habitsButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          if (userHabits.length > 0) {
+            window.location.href = "list_habitats.html"; // Если есть привычки
+          } else {
+            window.location.href = "habitat_without_value.html"; // Если привычек нет
+          }
+        });
+      }
+    });
+  </script> {% endcomment %}
+
+  </body>
+  </html>

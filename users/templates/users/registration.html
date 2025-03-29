@@ -1,4 +1,4 @@
-{%load static%}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,10 +13,10 @@
     <div class="card">
         <div class="left-side">
             <div class="illustration_fon">
-                <img src="{% static 'img/fon_illustation_for_registration.svg'%}" alt="Background Illustration">
+                <img src="img/fon_illustation_for_registration.svg" alt="Background Illustration">
             </div>
             <div class="illustration">
-                <img src="{% static 'img/img_register.svg' %}" alt="Main Illustration">
+                <img src="img/img_register.svg" alt="Main Illustration">
             </div>
         </div>
         <div class="right-side">
@@ -24,27 +24,29 @@
             <p>Please login or register to continue</p>
 
             <!-- Форма входа -->
-            <form action="{%url 'users:login' %}" method="post">
-                {{form}}
-                <label for="login-email">Email Address</label>
-                <input type="email" id="login-email" placeholder="Enter your email" required>
-                <label for="login-password">Password</label>
+            <form action = "{% url "users:login" %}" method = "post">
+                {% csrf_token %}
 
-                <input type="password" id="login-password" placeholder="Enter your password" required>
+                <label for="login-email" class = "form-label">Email Address</label>
+                <input type="email" class = "form-control" name = "username" id="login-email" placeholder="Enter your email" required>
+
+                <label for="login-password" class = "form-label">Password</label>
+                <input type="password" class = "form-control" name = "password" id="login-password" placeholder="Enter your password" required>
+
                 <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
                 <button type="submit" class="login">Login</button>
                 <p id="login-error" class="error-message"></p>
 
-                <p class="or">or</p> 
+                <p class="or">or</p>
             </form>
             <form onsubmit="event.preventDefault(); register();">
 <!--                <button type="submit" class="register">Register</button>-->
-                <a href="{% url 'users:registration' %}" class="register">Register</a>
+                <a href="registr.html" class="register">Register</a>
             </form>
 
         </div>
     </div>
 </div>
-<script src="script_registration.js"></script>
+<script src="{% static 'script_registration.js' %}"></script>
 </body>
 </html>
