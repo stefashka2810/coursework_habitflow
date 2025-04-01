@@ -5,21 +5,21 @@
   <head>
     <meta charset="UTF-8">
     <title>Main After Registration</title>
-    <link rel="stylesheet" href="{%static 'css/styles_main_after_registration.css'%}">
+    <link rel="stylesheet" href="{% static 'css/styles_main_after_registration.css'%}"> 
   </head>
   <body>
   <div class="wrapper">
     <header class="container">
       <nav>
         <ul class="left-nav">
-          <li class="profile"><a href="#" id="profile-button">Profile</a></li>
+          <li class="profile"><a href="{% url 'users:profile'%}">Profile</a></li>
           <li><a href="#" id="habits-button">Habit</a></li>
           <li><a href="#">Diagrams</a></li>
         </ul>
         <span class="logo">HabitFlow</span>
         <ul class="right-nav">
           <li><a href="settings.html">Settings</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="settings.html">About</a></li>
         </ul>
       </nav>
     </header>
@@ -39,15 +39,15 @@
   </div>
   <div class="habit-icons">
     <div class="habit-item">
-      <img src="img/water.svg" alt="Drink water">
+      <img src="{% static 'img/water.svg'%}" alt="Drink water">
       <p>Drink water every day</p>
     </div>
     <div class="habit-item">
-      <img src="img/gym.svg" alt="Go to the gym">
+      <img src="{% static 'img/gym.svg'%}" alt="Go to the gym">
       <p>Go to the gym every week</p>
     </div>
     <div class="habit-item">
-      <img src="img/wake_up.svg" alt="Wake up early">
+      <img src="{% static 'img/wake-up.svg'%}" alt="Wake up early">
       <p>Wake up early every day</p>
     </div>
   </div>
@@ -58,15 +58,15 @@
   </div>
   <div class="habit-icons_1">
     <div class="habit-item">
-      <img src="img/smoking.svg" alt="Smoking">
+      <img src="{% static 'img/smoking.svg'%}" alt="Smoking">
       <p>Smoking</p>
     </div>
     <div class="habit-item">
-      <img src="img/sweets.svg" alt="Eat a lot of sweets">
+      <img src="{% static 'img/sweets.svg'%}" alt="Eat a lot of sweets">
       <p>Eat a lot of sweets</p>
     </div>
     <div class="habit-item">
-      <img src="img/game.svg" alt="Gambling addiction">
+      <img src="{% static 'img/game.svg'%}" alt="Gambling addiction">
       <p>Gambling addiction</p>
     </div>
   </div>

@@ -6,6 +6,7 @@ from django.contrib.auth.models import BaseUserManager
 
 class User(AbstractUser):
     
+    
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'

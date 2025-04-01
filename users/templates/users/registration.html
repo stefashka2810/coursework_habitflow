@@ -43,15 +43,11 @@
                 placeholder="Enter your password" 
                 required>
 
-                <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+                <a href="{% url 'users:password_reset'%}" class="forgot-password">Forgot password?</a>
                 <button type="submit" class="login">Login</button>
-
-                <p class="or">or</p>
+                <span class="or">or</span>
+                <a href="{% url 'users:registration' %}" class="register">Register</a>
             </form>
-            <button type="submit" class="register">Register</button>
-            <a href="{% url 'users:registration'%}" class="register"></a>
-            </form>
-
         </div>
     </div>
 </div>

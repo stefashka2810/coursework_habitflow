@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
 from django.contrib import messages, auth
-from django.urls import reverse, NoReverseMatch
+from django.urls import reverse
+from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from .forms import UserLoginForm, UserRegisterForm
 
@@ -29,3 +29,8 @@ def registration(request):
     else:
         form = UserRegisterForm()
     return render(request, "users/registr.html", {'form': form})
+
+
+def profile(request):
+    return render(request, "users/profile.html", {'user': request.user})
+

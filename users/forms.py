@@ -30,7 +30,6 @@ class UserRegisterForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
 
     username = forms.CharField()
-
     password = forms.CharField()
     
     # error_messages = {
@@ -41,3 +40,16 @@ class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+class ForgotPasswordForm(forms.Form):
+    username = forms.CharField(
+        label='Имя пользователя',
+        max_length=150,
+        required=True
+    )
+    new_password = forms.CharField(
+        label='Новый пароль',
+        widget=forms.PasswordInput,
+        min_length=8,
+        required=True
+    )
