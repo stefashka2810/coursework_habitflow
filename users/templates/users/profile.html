@@ -20,8 +20,8 @@
       <!-- ЛОГОТИП HabitFlow с обработчиком клика -->
       <span class="logo" id="home-button">HabitFlow</span>
       <ul class="right-nav">
-        <li><a href="settings.html">Settings</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="{% url 'main:settings'%}">Settings</a></li>
+        <li><a href="{% url 'main:about'%}">About</a></li>
       </ul>
     </nav>
   </header>
@@ -31,11 +31,13 @@
 <div class="container_2">
   <div class="content">
     <div class="text-section">
-      <h1 id="profile-greeting">Hello, user</h1>
+      <h1 id="profile-greeting">Hello, {{ user.get_display_name }}</h1>
       <h2>Your habits:</h2>
       <ul id="habits-list"></ul>
       <p id="no-habits-message" style="display: none;">You don't have any habits yet, add them!</p>
-      <button id="add-habit-btn" style="display: none;" onclick="window.location.href='add_habitat.html'">Add habit</button>
+      <button id="add-habit-btn" onclick="window.location.href='{% url 'habits:create_habit' %}'">
+        Add habit
+      </button>
     </div>
     <div class="image-section">
       <img src="{% static 'img/profile.svg'%}" alt="">

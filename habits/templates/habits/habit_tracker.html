@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="css/style_habit_tracker.css">
+</head>
+<body>
+<div class="wrapper">
+  <header class="container_1">
+    <nav>
+      <ul class="left-nav">
+        <li><a href="profile.html">Profile</a></li>
+        <li class="Habitat"><a href="#" class="active">Habitat</a></li>
+        <li><a href="#">Diagrams</a></li>
+      </ul>
+      <!-- Логотип "HabitFlow", который теперь работает как кнопка -->
+      <span class="logo" id="home-button">HabitFlow</span>
+      <ul class="right-nav">
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="container_2">
+  <h1 id="habit-title">Loading...</h1>
+  <p id="habit-period"></p>
+  <p id="habit-description"></p>
+
+  <!-- Трекер привычки -->
+  <div class="habit-tracker" id="habit-tracker"></div>
+
+  <!-- Кнопка для возврата к списку привычек -->
+  <button id="back-to-list" class="back-button">Back to List</button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const habitName = params.get("habit");
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    const homeButton = document.getElementById("home-button");
+
+    if (!user) {
+      alert("You need to register first!");
+      window.location.href = "registration.html";
+      return;
+    }
+
+    // Загружаем привычки только текущего пользователя
+    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
+    let habit = userHabits.find(h => h.name === habitName);
+
+    if (!habit) {
+      alert("Habit not found!");
+      window.location.href = "profile.html";
+      return;
+    }
+
+    document.getElementById("habit-title").textContent = habit.name;
+    document.getElementById("habit-period").textContent = `From ${habit.startDate} to ${habit.endDate}`;
+    document.getElementById("habit-description").textContent = habit.description;
+
+    generateTracker(habit, user);
+
+    // Обработчик для кнопки "Back to List"
+    document.getElementById("back-to-list").addEventListener("click", function () {
+      window.location.href = "list_habitats.html";
+    });
+
+    // Добавляем обработчик на логотип "HabitFlow"
+    if (homeButton) {
+      homeButton.addEventListener("click", function () {
+        window.location.href = "main_after_registration.html";
+      });
+    }
+  });
+
+  function generateTracker(habit, user) {
+    let trackerContainer = document.getElementById("habit-tracker");
+    trackerContainer.innerHTML = "";
+
+    let startDate = new Date(habit.startDate);
+    let endDate = new Date(habit.endDate);
+
+    let daysBetween = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+    let totalCircles = calculateCircles(habit.frequency, daysBetween);
+
+    // Загружаем сохраненные данные выполнения
+    let completedDays = habit.completedDays || [];
+
+    for (let i = 0; i < totalCircles; i++) {
+      let circle = document.createElement("div");
+      circle.classList.add("tracker-circle");
+      if (completedDays.includes(i)) {
+        circle.classList.add("completed"); // Загружаем выполненные дни
+      }
+
+      circle.addEventListener("click", function () {
+        if (circle.classList.toggle("completed")) {
+          completedDays.push(i);
+        } else {
+          completedDays = completedDays.filter(day => day !== i);
+        }
+        habit.completedDays = completedDays;
+        saveUpdatedHabit(habit, user);
+      });
+
+      trackerContainer.appendChild(circle);
+    }
+  }
+
+  function calculateCircles(frequency, days) {
+    if (frequency === "Daily") return days;
+    if (frequency === "Weekly") return Math.ceil(days / 7);
+    if (frequency === "Every 2 Weeks") return Math.ceil(days / 14);
+    if (frequency === "Monthly") return Math.ceil(days / 30);
+    if (frequency === "Every 6 Months") return Math.ceil(days / 180);
+    if (frequency === "Yearly") return Math.ceil(days / 365);
+    return 0;
+  }
+
+  function saveUpdatedHabit(habit, user) {
+    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
+    let habitIndex = userHabits.findIndex(h => h.name === habit.name);
+
+    if (habitIndex !== -1) {
+      userHabits[habitIndex] = habit;
+      localStorage.setItem(`habits_${user.email}`, JSON.stringify(userHabits));
+    }
+  }
+</script>
+
+</body>
+</html>

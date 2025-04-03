@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>List of Habits</title>
+  <link rel="stylesheet" href="css/style_list_habitats.css">
+</head>
+<body>
+<div class="wrapper">
+  <header class="container_1">
+    <nav>
+      <ul class="left-nav">
+        <li><a href="profile.html">Profile</a></li>
+        <li class="Habitat"><a href="#" class="active">Habit</a></li>
+        <li><a href="#">Diagrams</a></li>
+      </ul>
+      <span class="logo" id="home-button">HabitFlow</span>
+      <ul class="right-nav">
+        <li><a href="settings.html">Settings</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="container_2">
+  <div class="content">
+    <div class="habit-list-section">
+      <h2>List your habits</h2>
+      <ul class="habit-list" id="habit-list"></ul>
+      <button class="add-button" onclick="location.href='add_habitat.html'">Add habit</button>
+    </div>
+    <div class="image-section">
+      <img src="img/habits_list_img.svg" alt="Habit Illustration">
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const homeButton = document.getElementById("home-button"); // Теперь homeButton определен правильно
+
+    if (!user) {
+      alert("You need to register first!");
+      window.location.href = "registration.html";
+      return;
+    }
+
+    const habitList = document.getElementById("habit-list");
+    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
+
+    // Отображаем привычки
+    function displayHabits() {
+      habitList.innerHTML = "";
+
+      if (userHabits.length === 0) {
+        habitList.innerHTML = "<p>You don't have any habits yet!</p>";
+      } else {
+        userHabits.forEach((habit, index) => {
+          let listItem = document.createElement("li");
+
+          // Создаем ссылку на трекер привычки
+          let habitLink = document.createElement("a");
+          habitLink.textContent = habit.name;
+          habitLink.href = `habit_tracker.html?habit=${encodeURIComponent(habit.name)}`;
+          habitLink.classList.add("habit-link");
+
+          // Кнопка удаления привычки
+          let deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "🗑️";
+          deleteBtn.classList.add("delete-btn");
+          deleteBtn.onclick = function (event) {
+            event.preventDefault(); // Чтобы клик по кнопке не открыл трекер
+            deleteHabit(index);
+          };
+
+          listItem.appendChild(habitLink);
+          listItem.appendChild(deleteBtn);
+          habitList.appendChild(listItem);
+        });
+      }
+    }
+
+    // Функция удаления привычки
+    function deleteHabit(index) {
+      userHabits.splice(index, 1);
+      localStorage.setItem(`habits_${user.email}`, JSON.stringify(userHabits));
+      displayHabits();
+    }
+
+    displayHabits();
+
+    // Теперь homeButton определен перед использованием
+    if (homeButton) {
+      homeButton.addEventListener("click", function () {
+        window.location.href = "main_after_registration.html";
+      });
+    }
+  });
+
+</script>
+
+</body>
+</html>

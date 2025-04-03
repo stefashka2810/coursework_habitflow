@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import HabitForm
 
-@login_required
+
 def create_habit(request):
     if request.method == 'POST':
         form = HabitForm(request.POST)
@@ -10,8 +10,11 @@ def create_habit(request):
             habit = form.save(commit=False)
             habit.user = request.user  
             habit.save()
-            return redirect('habits:habit_list')  
+            return redirect('habits:habit_tracker')  
     else:
         form = HabitForm()
     
-    return render(request, 'habits/create_habit.html', {'form': form})
+    return render(request, 'habits/add_habitat.html', {'form': form})
+
+def habit_tracker(request):
+    return render(request, 'habits/habit_tracker.html')

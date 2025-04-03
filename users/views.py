@@ -25,7 +25,7 @@ def registration(request):
         form = UserRegisterForm(data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('main:main_after_registration'))
+            return HttpResponseRedirect(reverse('users:login'))
     else:
         form = UserRegisterForm()
     return render(request, "users/registr.html", {'form': form})
