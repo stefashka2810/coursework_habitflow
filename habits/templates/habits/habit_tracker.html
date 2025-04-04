@@ -1,136 +1,121 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Habit Tracker</title>
-  <link rel="stylesheet" href="css/style_habit_tracker.css">
+  <link rel="stylesheet" href="{% static 'css/style_habit_tracker.css' %}" />
+  <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 <body>
+
 <div class="wrapper">
   <header class="container_1">
     <nav>
       <ul class="left-nav">
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="{% url 'users:profile' %}">Profile</a></li>
         <li class="Habitat"><a href="#" class="active">Habitat</a></li>
         <li><a href="#">Diagrams</a></li>
       </ul>
-      <!-- Логотип "HabitFlow", который теперь работает как кнопка -->
       <span class="logo" id="home-button">HabitFlow</span>
       <ul class="right-nav">
-        <li><a href="settings.html">Settings</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="{% url 'main:settings' %}">Settings</a></li>
+        <li><a href="{% url 'main:about' %}">About</a></li>
       </ul>
     </nav>
   </header>
 </div>
 
 <div class="container_2">
-  <h1 id="habit-title">Loading...</h1>
-  <p id="habit-period"></p>
-  <p id="habit-description"></p>
+  <h1 id="habit-title">{{ habit.name }}</h1>
+  <p id="habit-period">From {{ habit.created_at|date:"Y-m-d" }} to {{ habit.end_date|date:"Y-m-d" }}</p>
+  <p id="habit-description">{{ habit.description }}</p>
 
-  <!-- Трекер привычки -->
   <div class="habit-tracker" id="habit-tracker"></div>
 
-  <!-- Кнопка для возврата к списку привычек -->
   <button id="back-to-list" class="back-button">Back to List</button>
 </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const params = new URLSearchParams(window.location.search);
-    const habitName = params.get("habit");
+  const habit = {
+    id: {{ habit.id }},
+    name: "{{ habit.name }}",
+    startDate: "{{ habit.created_at|date:'Y-m-d' }}",
+    endDate: "{{ habit.end_date|date:'Y-m-d' }}",
+    frequency: "{{ habit.frequency }}",
+    completedDays: {{ completed_days|safe }}
+  };
 
-    const user = JSON.parse(localStorage.getItem("user"));
+  function getCSRFToken() {
+    return document.cookie.split('; ')
+      .find(row => row.startsWith('csrftoken='))
+      ?.split('=')[1];
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
     const homeButton = document.getElementById("home-button");
 
-    if (!user) {
-      alert("You need to register first!");
-      window.location.href = "registration.html";
-      return;
-    }
+    generateTracker(habit);
 
-    // Загружаем привычки только текущего пользователя
-    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
-    let habit = userHabits.find(h => h.name === habitName);
-
-    if (!habit) {
-      alert("Habit not found!");
-      window.location.href = "profile.html";
-      return;
-    }
-
-    document.getElementById("habit-title").textContent = habit.name;
-    document.getElementById("habit-period").textContent = `From ${habit.startDate} to ${habit.endDate}`;
-    document.getElementById("habit-description").textContent = habit.description;
-
-    generateTracker(habit, user);
-
-    // Обработчик для кнопки "Back to List"
     document.getElementById("back-to-list").addEventListener("click", function () {
-      window.location.href = "list_habitats.html";
+      window.location.href = "{% url 'habits:list' %}";
     });
 
-    // Добавляем обработчик на логотип "HabitFlow"
     if (homeButton) {
       homeButton.addEventListener("click", function () {
-        window.location.href = "main_after_registration.html";
+        window.location.href = "{% url 'main:home' %}";
       });
     }
   });
 
-  function generateTracker(habit, user) {
+  function generateTracker(habit) {
     let trackerContainer = document.getElementById("habit-tracker");
     trackerContainer.innerHTML = "";
 
     let startDate = new Date(habit.startDate);
     let endDate = new Date(habit.endDate);
-
     let daysBetween = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    let totalCircles = calculateCircles(habit.frequency, daysBetween);
+    let completedDaysSet = new Set(habit.completedDays);
 
-    // Загружаем сохраненные данные выполнения
-    let completedDays = habit.completedDays || [];
+    for (let i = 0; i <= daysBetween; i++) {
+      let currentDate = new Date(startDate);
+      currentDate.setDate(startDate.getDate() + i);
+      let dateStr = currentDate.toISOString().split("T")[0];
 
-    for (let i = 0; i < totalCircles; i++) {
       let circle = document.createElement("div");
       circle.classList.add("tracker-circle");
-      if (completedDays.includes(i)) {
-        circle.classList.add("completed"); // Загружаем выполненные дни
+      if (completedDaysSet.has(dateStr)) {
+        circle.classList.add("completed");
       }
 
       circle.addEventListener("click", function () {
-        if (circle.classList.toggle("completed")) {
-          completedDays.push(i);
-        } else {
-          completedDays = completedDays.filter(day => day !== i);
-        }
-        habit.completedDays = completedDays;
-        saveUpdatedHabit(habit, user);
+        let completed = !circle.classList.contains("completed");
+
+        fetch("{% url 'habits:update_progress' %}", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken()
+          },
+          body: JSON.stringify({
+            habit_id: habit.id,
+            date: dateStr,
+            completed: completed
+          })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            circle.classList.toggle("completed");
+          } else {
+            alert("Error saving progress: " + data.message);
+          }
+        });
       });
 
       trackerContainer.appendChild(circle);
-    }
-  }
-
-  function calculateCircles(frequency, days) {
-    if (frequency === "Daily") return days;
-    if (frequency === "Weekly") return Math.ceil(days / 7);
-    if (frequency === "Every 2 Weeks") return Math.ceil(days / 14);
-    if (frequency === "Monthly") return Math.ceil(days / 30);
-    if (frequency === "Every 6 Months") return Math.ceil(days / 180);
-    if (frequency === "Yearly") return Math.ceil(days / 365);
-    return 0;
-  }
-
-  function saveUpdatedHabit(habit, user) {
-    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
-    let habitIndex = userHabits.findIndex(h => h.name === habit.name);
-
-    if (habitIndex !== -1) {
-      userHabits[habitIndex] = habit;
-      localStorage.setItem(`habits_${user.email}`, JSON.stringify(userHabits));
     }
   }
 </script>

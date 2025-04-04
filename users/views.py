@@ -34,3 +34,8 @@ def registration(request):
 def profile(request):
     return render(request, "users/profile.html", {'user': request.user})
 
+def logout(request):
+    auth.logout(request)
+    messages.success(request, "Вы вышли из аккаунта.")
+    return redirect('main:index')
+

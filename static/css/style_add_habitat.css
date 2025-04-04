@@ -98,77 +98,86 @@ header .right-nav {
     flex: 1;
     justify-content: flex-end;
 }
-
-
-.card {
-    background: #ffffff;
-    width: 100vw;
+.container_2 {
+    width: 100vw;              /* Во всю ширину окна */
     height: 70vh;
-    max-width: 1400px;
-    margin: 10px auto;
-    padding: 40px;
-    border-radius: 20px;
-    color: #2f0f05;
-}
-
-.content {
+    max-width: 1400px;          /* Минимальная высота 70% от окна (или уберите, если не нужно) */
+    margin: 30px auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    width: 100%;
+    align-items: center;       /* Центрируем содержимое по вертикали */
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 40px;
 }
 
-/* Стили для формы */
+/* Левая колонка: форма */
 .form-section {
+    width: 50%;               /* Ровно половина контейнера */
     display: flex;
     flex-direction: column;
-    width: 50%;
+    align-items: flex-start;   /* Прижимаем поля к левому краю */
+    margin-top: 30px;         /* Поднимите/уменьшите значение, чтобы скорректировать вертикальное положение формы */
 }
 
+/* Пример заголовка и описания формы (если нужны) */
+.form-section h1 {
+    font-size: 1.8rem;
+    color: #5E2611;
+    margin-bottom: 15px;
+}
+
+.form-section p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Поля ввода и селекты - одинаковая ширина для ровных коричневых линий */
 .form-section input,
 .form-section select {
-    width: 50%;
-    padding: 10px;
-    margin-bottom: 10px;
+    width: 300px;              /* Все нижние линии будут одинаковыми */
+    padding: 10px 0;
+    margin-bottom: 15px;
     border: none;
     border-bottom: 2px solid #5E2611;
-    font-size: 1rem;
     background: transparent;
-    color: black;
+    font-size: 1rem;
+    color: #333;
     outline: none;
 }
 
-/* Плейсхолдеры */
+/* Плейсхолдер */
 .form-section input::placeholder,
 .form-section select:invalid {
     color: #5E2611;
     font-weight: 500;
 }
 
-/* Стили для select */
+/* Стили для select (при желании убрать стрелочку: appearance: none;) */
 .form-section select {
     cursor: pointer;
-    appearance: none;
 }
 
-/* Стили для опций */
 .form-section select option {
     background-color: #F0E4DF;
     color: black;
 }
 
-/* Стили для кнопки */
+/* Кнопка - тоже можно сделать 300px, если хотите ту же ширину, что и у полей */
 .add-button {
     background-color: #5E2611;
     color: white;
-    padding: 12px 5px;
-    width: 300px;
+    padding: 12px 0;
+    width: 300px;              /* Поменяйте на 300px, чтобы совпадало с линиями */
     border: none;
     border-radius: 20px;
     font-size: 1.2rem;
     cursor: pointer;
     margin-top: 10px;
     transition: all 0.3s ease-in-out;
+    text-align: center;
 }
 
 .add-button:hover {
@@ -180,13 +189,16 @@ header .right-nav {
     transform: scale(0.95);
 }
 
-/* Изображение */
+/* Правая колонка: картинка */
 .image-section {
-    width: 50%;
+    width: 50%;               /* Вторая половина контейнера */
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .image-section img {
-    width: 90%;
+    max-width: 150%;    
+    margin-left: -300px;
+    height: 500px;
 }

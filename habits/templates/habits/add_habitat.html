@@ -26,17 +26,15 @@
     </header>
 </div>
 
-<div class="container"> 
-    <div class="card">
-        <h1>Add New Habit</h1>
-        <p>Please fill in the details to add a new habit.</p>
-        
+<div class="container_2"> 
+    <div class="content">
+
+        <div class="form-section">
         <!-- Форма отправляется по адресу `habits:create_habit` методом POST -->
         <form action="{% url 'habits:create_habit' %}" method="post">
             {% csrf_token %}
             
             <!-- Name -->
-            <label for="id_name" class="form-label">Name of habit</label>
             <input type="text" class="form-control" id="id_name"
                    value="{% if form.name.value %}{{ form.name.value }}{% endif %}"
                    name="name"
@@ -48,7 +46,6 @@
             {% endif %}
 
             <!-- Description -->
-            <label for="id_description" class="form-label">Describe habit</label>
             <input type="text" class="form-control" id="id_description"
                    value="{% if form.description.value %}{{ form.description.value }}{% endif %}"
                    name="description"
@@ -60,7 +57,6 @@
             {% endif %}
             
             <!-- Category -->
-            <label for="id_category" class="form-label">Category</label>
             <select class="form-control" id="id_category" name="category" required>
                 <!-- Для "placeholder"-опции -->
                 <option value="" disabled selected hidden>Category</option>
@@ -73,10 +69,7 @@
               </div>
             {% endif %}
             
-            
-            
             <!-- Frequency -->
-            <label for="id_frequency" class="form-label">Frequency of execution</label>
             <select class="form-control" id="id_frequency" name="frequency" required>
                 <option value="" disabled selected hidden>Frequency of execution</option>
                 <option value="daily">Daily</option>
@@ -93,7 +86,6 @@
             {% endif %}
             
             <!-- End Date -->
-            <label for="id_end_date" class="form-label">End Date</label>
             <input type="text" class="form-control" id="id_end_date"
                    value="{% if form.end_date.value %}{{ form.end_date.value }}{% endif %}"
                    name="end_date"
@@ -111,53 +103,13 @@
             <button type="submit" class="add-button">Add</button>
         </form>
     </div>
+    </div>
     
-    <!-- Картинка (если хотите её вывести рядом) -->
+    <!-- Картинка  -->
     <div class="image-section">
         <img src="{% static 'img/habitat_img.svg'%}" alt="Meditation Illustration">
     </div>
 </div>
-
-{% comment %} <script>
-    function saveHabit() {
-        let habitName = document.getElementById("habit-name").value.trim();
-        let habitCategory = document.getElementById("habit-category").value;
-        let habitDescription = document.getElementById("habit-description").value.trim();
-        let habitFrequency = document.getElementById("habit-frequency").value;
-        let habitEndDate = document.getElementById("habit-end-date").value;
-        let startDate = new Date().toISOString().split("T")[0]; // Сегодняшняя дата
-
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (!user) {
-            alert("You need to register first!");
-            window.location.href = "registration.html";
-            return;
-        }
-
-        if (!habitName || !habitDescription || !habitEndDate) {
-            alert("Please fill in all fields!");
-            return;
-        }
-
-        let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
-
-        let newHabit = {
-            name: habitName,
-            category: habitCategory,
-            description: habitDescription,
-            frequency: habitFrequency,
-            startDate: startDate,
-            endDate: habitEndDate
-        };
-
-        userHabits.push(newHabit);
-        localStorage.setItem(`habits_${user.email}`, JSON.stringify(userHabits));
-
-        alert("Habit added successfully!");
-        window.location.href = `habit_tracker.html?habit=${encodeURIComponent(habitName)}`; // Переход в трекер
-    }
-</script> {% endcomment %}
-
 
 </body>
 </html>

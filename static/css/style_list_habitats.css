@@ -132,7 +132,7 @@ header .right-nav {
     padding: 0;
 }
 
-.habit-list li {
+.habit-list-section li span {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -141,6 +141,7 @@ header .right-nav {
     border-bottom: 2px solid #5E2611;
     padding-bottom: 5px;
 }
+
 
 .delete-btn {
     background: none;
