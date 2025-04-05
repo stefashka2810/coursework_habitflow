@@ -35,5 +35,16 @@ class Habit(models.Model):
         return f'{self.name} ({self.category})'
     
 
+class HabitCompletion(models.Model):
+    habit = models.ForeignKey(Habit, on_delete=models.CASCADE, related_name='completions')
+    date = models.DateField()
+    completed = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('habit', 'date')
+    
+    def __str__(self):
+        return f'Habit: {self.habit.name} | {self.date} | Completed: {self.completed}'
+
 
         
