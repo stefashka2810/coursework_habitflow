@@ -46,4 +46,5 @@ urlpatterns = [
     ),
 
     path('logout/', views.logout, name= 'logout'),
+    path('delete_account/', views.delete_account, name='delete_account'),
 ]

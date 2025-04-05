@@ -33,8 +33,18 @@
     <div class="text-section">
       <h1 id="profile-greeting">Hello, {{ user.get_display_name }}</h1>
       <h2>Your habits:</h2>
-      <ul id="habits-list"></ul>
-      <p id="no-habits-message" style="display: none;">You don't have any habits yet, add them!</p>
+      {% if habits %}
+      <ul class="habit-list">
+      {% for habit in habits %}
+        <li>
+          <strong>{{ habit.name }}</strong><br>
+          <span>{{ habit.description }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+     {% else %}
+    <p id="no-habits-message">You don't have any habits yet, add them!</p>
+    {% endif %}
       <button id="add-habit-btn" onclick="window.location.href='{% url 'habits:create_habit' %}'">
         Add habit
       </button>

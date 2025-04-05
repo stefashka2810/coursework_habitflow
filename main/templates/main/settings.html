@@ -46,15 +46,45 @@
       </div>
     
       <button type="button" class="exit-button" onclick="logout()">Exit</button>
+      <button type="button" class="delete-button" onclick="openModal()">Delete Account</button>
 
     </form>
   </div>
 </div>
 
+<div id="deleteModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <h3>Confirm Account Deletion</h3>
+    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+    <form action="{% url 'users:delete_account' %}" method="post">
+      {% csrf_token %}
+      <div class="modal-buttons">
+        <button type="submit" class="confirm-button">Yes, delete</button>
+        <button type="button" class="cancel-button" onclick="closeModal()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
-  function logout() {
-    window.location.href = "{% url 'users:logout' %}";
-  }
+    function logout() {
+      window.location.href = "{% url 'users:logout' %}";
+    }
+  
+    function openModal() {
+      document.getElementById('deleteModal').style.display = 'flex';
+    }
+  
+    function closeModal() {
+      document.getElementById('deleteModal').style.display = 'none';
+    }
+  
+    window.onclick = function(event) {
+      const modal = document.getElementById('deleteModal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
 </script>
 
 

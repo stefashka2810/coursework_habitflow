@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages, auth
 from django.urls import reverse
-from django.contrib.auth import get_user_model
 from django.http import HttpResponseRedirect
 from .forms import UserLoginForm, UserRegisterForm
+from habits.models import Habit
 
 def login(request):
     if request.method == 'POST':
@@ -32,10 +32,21 @@ def registration(request):
 
 
 def profile(request):
-    return render(request, "users/profile.html", {'user': request.user})
+    habits = Habit.objects.filter(user=request.user)
+    context = {
+        'user': request.user,
+        'habits': habits
+    }
+    return render(request, "users/profile.html", context)
 
 def logout(request):
     auth.logout(request)
-    messages.success(request, "Вы вышли из аккаунта.")
     return redirect('main:index')
 
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        auth.logout(request)           
+        user.delete()            
+        return redirect('main:index')  
+    return redirect('main:settings')  
