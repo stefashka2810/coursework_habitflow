@@ -1,123 +1,77 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Habit Tracker</title>
-  <link rel="stylesheet" href="{% static 'css/style_habit_tracker.css' %}" />
-  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta charset="UTF-8">
+  <title>{{ habit.name }} Tracker</title>
+  <link rel="stylesheet" href="{% static 'css/style_habit_tracker.css' %}">
 </head>
 <body>
-
-<div class="wrapper">
-  <header class="container_1">
-    <nav>
-      <ul class="left-nav">
-        <li><a href="{% url 'users:profile' %}">Profile</a></li>
-        <li class="Habitat"><a href="#" class="active">Habitat</a></li>
-        <li><a href="#">Diagrams</a></li>
-      </ul>
-      <span class="logo" id="home-button">HabitFlow</span>
-      <ul class="right-nav">
-        <li><a href="{% url 'main:settings' %}">Settings</a></li>
-        <li><a href="{% url 'main:about' %}">About</a></li>
-      </ul>
-    </nav>
-  </header>
-</div>
-
 <div class="container_2">
-  <h1 id="habit-title">{{ habit.name }}</h1>
-  <p id="habit-period">From {{ habit.created_at|date:"Y-m-d" }} to {{ habit.end_date|date:"Y-m-d" }}</p>
-  <p id="habit-description">{{ habit.description }}</p>
+  <h1>{{ habit.name }}</h1>
+  <p>From {{ habit.get_start_date }} to {{ habit.end_date }} | Frequency: {{ habit.frequency }}</p>
+  <p>{{ habit.description }}</p>
 
-  <div class="habit-tracker" id="habit-tracker"></div>
+  <!-- Трекер привычки -->
+  <div class="habit-tracker">
+    {% for day_date in dates_list %}
+      {% if day_date in completed_dates %}
+        <!-- Если день есть в completed_dates, выводим закрашенный кружок -->
+        <div 
+          class="tracker-circle completed" 
+          data-date="{{ day_date|date:'Y-m-d' }}">
+        </div>
+      {% else %}
+        <!-- Иначе кружок будет пустым -->
+        <div 
+          class="tracker-circle"
+          data-date="{{ day_date|date:'Y-m-d' }}">
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 
-  <button id="back-to-list" class="back-button">Back to List</button>
+  <a href="{% url 'habits:habit_list' %}" class="back-button">Back to List</a>
 </div>
 
+{% csrf_token %}
 <script>
-  const habit = {
-    id: {{ habit.id }},
-    name: "{{ habit.name }}",
-    startDate: "{{ habit.created_at|date:'Y-m-d' }}",
-    endDate: "{{ habit.end_date|date:'Y-m-d' }}",
-    frequency: "{{ habit.frequency }}",
-    completedDays: {{ completed_days|safe }}
-  };
+document.addEventListener("DOMContentLoaded", function() {
+  // Ищем все кружочки
+  document.querySelectorAll('.tracker-circle').forEach(function(circle) {
+    circle.addEventListener('click', function() {
+      const circleElem = this;
+      const dateValue = circleElem.getAttribute('data-date');
 
-  function getCSRFToken() {
-    return document.cookie.split('; ')
-      .find(row => row.startsWith('csrftoken='))
-      ?.split('=')[1];
-  }
+      // Определяем, будет ли кружок «закрашен» после клика
+      const willBeCompleted = !circleElem.classList.contains('completed');
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const homeButton = document.getElementById("home-button");
-
-    generateTracker(habit);
-
-    document.getElementById("back-to-list").addEventListener("click", function () {
-      window.location.href = "{% url 'habits:list' %}";
-    });
-
-    if (homeButton) {
-      homeButton.addEventListener("click", function () {
-        window.location.href = "{% url 'main:home' %}";
-      });
-    }
-  });
-
-  function generateTracker(habit) {
-    let trackerContainer = document.getElementById("habit-tracker");
-    trackerContainer.innerHTML = "";
-
-    let startDate = new Date(habit.startDate);
-    let endDate = new Date(habit.endDate);
-    let daysBetween = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-    let completedDaysSet = new Set(habit.completedDays);
-
-    for (let i = 0; i <= daysBetween; i++) {
-      let currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
-      let dateStr = currentDate.toISOString().split("T")[0];
-
-      let circle = document.createElement("div");
-      circle.classList.add("tracker-circle");
-      if (completedDaysSet.has(dateStr)) {
-        circle.classList.add("completed");
-      }
-
-      circle.addEventListener("click", function () {
-        let completed = !circle.classList.contains("completed");
-
-        fetch("{% url 'habits:update_progress' %}", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCSRFToken()
-          },
-          body: JSON.stringify({
-            habit_id: habit.id,
-            date: dateStr,
-            completed: completed
-          })
+      // Шлём запрос на сервер, чтобы сохранить новое состояние
+      fetch("{% url 'habits:toggle_completion' habit.id %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": "{{ csrf_token }}",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          date: dateValue,
+          completed: willBeCompleted
         })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "success") {
-            circle.classList.toggle("completed");
-          } else {
-            alert("Error saving progress: " + data.message);
-          }
-        });
-      });
-
-      trackerContainer.appendChild(circle);
-    }
-  }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // Если сервер всё сохранил, меняем класс, и кружок окрашивается/снимается
+          circleElem.classList.toggle('completed');
+        } else {
+          alert(data.error);
+        }
+      })
+      .catch(err => console.error('Error:', err));
+    });
+  });
+});
 </script>
 
 </body>

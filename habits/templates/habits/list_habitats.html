@@ -31,16 +31,14 @@
       <h2>List your habits</h2>
       <ul>
         {% for habit in habits %}
-        <li>
-          <span>{{ habit.name }}</span> – 
-          <span>{{ habit.category }}</span> – 
-          <span>{{ habit.frequency }}</span>
-          <br>
-          <span>{{ habit.description }}</span>
-          <br>
-          <span>End date: {{ habit.end_date }}</span>
-        </li>
-        {% endfor %}
+    <li>
+      <a href="{% url 'habits:habit_tracker' habit.id %}">
+        {{ habit.name }}
+      </a>
+      <br>
+      {{ habit.description }}
+  </li>
+  {% endfor %}
       </ul>
       <button id="add-button" onclick="window.location.href='{% url 'habits:create_habit' %}'">
         Add habit

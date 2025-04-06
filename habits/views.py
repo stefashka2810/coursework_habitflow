@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import HabitForm
-from .models import Habit
-from .models import Habit
+from .models import Habit, HabitCompletion
 from django.shortcuts import get_object_or_404, render
 from datetime import timedelta
+import json
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.utils.dateparse import parse_date
 
 
 def create_habit(request):
@@ -21,7 +24,7 @@ def create_habit(request):
 
 def habit_list(request):
     habits = Habit.objects.filter(user=request.user)
-    
+
     if(habits): return render(request, 'habits/list_habitats.html', {'habits': habits})
     else: return render(request, 'habits/habitat_without_value.html')
 
@@ -68,3 +71,29 @@ def generate_date_points(start_date, end_date, frequency):
 
 def habit_frequency_key(frequency):
     return frequency.lower()
+
+@require_POST 
+def toggle_completion(request, habit_id):
+    if request.method == 'POST':
+        user = request.user
+        habit = get_object_or_404(Habit, pk=habit_id, user=user)
+
+        data = json.loads(request.body.decode('utf-8'))
+        date_str = data.get('date')
+        completed = data.get('completed', False)
+
+        date_obj = parse_date(date_str) 
+        
+        if not date_obj:
+            return JsonResponse({'success': False, 'error': 'Invalid date'}, status=400)
+        
+       
+        completion, created = HabitCompletion.objects.get_or_create(
+            habit=habit, date=date_obj
+        )
+        completion.completed = completed
+        completion.save()
+
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)

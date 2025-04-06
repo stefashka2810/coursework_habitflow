@@ -133,8 +133,9 @@ header .right-nav {
 }
 
 .tracker-circle.completed {
-    background: #2f0f05;
-}
+    background-color:#2f0f05 !important;
+  }
+
 
 .back-button {
     background-color: #5E2611;
