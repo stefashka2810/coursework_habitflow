@@ -65,6 +65,79 @@
     </form>
   </div>
 </div>
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background:rgb(75, 78, 56);
+    padding: 40px;
+    border-radius: 20px;
+    width: 450px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.modal-content h3 {
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.modal-content p {
+    color: white;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.modal-buttons button {
+    min-width: 120px;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.confirm-button {
+    background: #E3CDBB;
+    color: #2f0f05;
+}
+
+.confirm-button:hover {
+    background: #d4bda9;
+}
+
+.cancel-button {
+    background: #383A2B;
+    color: white;
+}
+
+.cancel-button:hover {
+    background: #2a2c20;
+}
+</style>
 
 <script>
     function logout() {

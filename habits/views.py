@@ -4,7 +4,7 @@ from .models import Habit, HabitCompletion
 from django.shortcuts import get_object_or_404, render
 from datetime import timedelta
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from django.utils.dateparse import parse_date
 
@@ -97,3 +97,14 @@ def toggle_completion(request, habit_id):
         return JsonResponse({'success': True})
     
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+
+def delete_habit(request, habit_id):
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    if request.method == 'POST':
+        habit.delete()
+        return redirect('habits:habit_list')
+    return HttpResponse("This page is only for POST requests", status=400)
+
+
+
