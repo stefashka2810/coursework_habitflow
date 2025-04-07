@@ -23,4 +23,6 @@ urlpatterns = [
     path('', include('main.urls', namespace='main')),
     path('users/', include('users.urls', namespace='users')),
     path('habits/', include('habits.urls', namespace='habits')),
+    path('notes/', include('habit_notes.urls', namespace='habit_notes')),
+
 ]

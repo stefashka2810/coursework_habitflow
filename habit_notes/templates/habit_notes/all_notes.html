@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes all</title>
+  <link rel="stylesheet" href="{%static 'css/styles_all_notes.css'%}">
+</head>
+<body>
+<div class="wrapper">
+  <header class="container">
+    <nav>
+        <ul class="left-nav">
+            <li class="profile"><a href="{%url 'users:profile'%}" id="profile-button" >Profile</a></li>
+            <li><a href="{%url 'habits:habit_list'%}" id="habits-button" >Habits</a></li>
+            <li><a href="{%url 'habit_notes:all_notes'%}" id="diagrams-button" class="active">Notes</a></li>
+        </ul>
+        <span class="logo" id="home-button" ><a href="{%url 'main:main_after_registration'%}">HabitFlow </a></span>
+        <ul class="right-nav">
+            <li><a href="{%url 'main:settings'%}" id="settings-button">Settings</a></li>
+            <li class="About"><a href="{%url 'main:about'%}" >About</a></li>
+        </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="wrapper_2">
+    <div class="container_2">
+{% for habit in habits %}
+  <div style="margin-bottom: 40px;">
+    <h1>{{ habit.name }} ({{ habit.get_category_display }})</small></h1>
+
+    <a href="{% url 'habit_notes:add_note' habit.id %}" class="add-note">➕ Add a note</a>
+
+    {% if habit.notes.all %}
+      {% for note in habit.notes.all %}
+        <div style="margin-top: 15px; padding: 10px; border: 1px solid #ddd;">
+          <strong>{{ note.date }}</strong> — {{ note.get_mood_display }}
+          {% if note.photo %}
+            <div><img src="{{ note.photo.url }}" width="150"></div>
+          {% endif %}
+          <p>{{ note.note }}</p>
+        </div>
+      {% endfor %}
+    {% else %}
+    <p class="no-notes">There are no notes yet.</p>
+    {% endif %}
+  </div>
+{% empty %}
+  <p class="no-habits">You don't have any habits yet.</p>
+{% endfor %}
+</div>
+</div>
+
+</body>
+</html>
+
+

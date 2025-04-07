@@ -13,16 +13,15 @@
   <header class="container_1">
     <nav>
       <ul class="left-nav">
-        <li class="profile"><a href="#" class="active">Profile</a></li>
-        <li><a href="{% url 'habits:habit_list'%}" id="habits-button">Habits</a></li>
-        <li><a href="#">Diagrams</a></li>
-      </ul>
-      <!-- ЛОГОТИП HabitFlow с обработчиком клика -->
-      <span class="logo" id="home-button">HabitFlow</span>
-      <ul class="right-nav">
-        <li><a href="{% url 'main:settings'%}">Settings</a></li>
-        <li><a href="{% url 'main:about'%}">About</a></li>
-      </ul>
+        <li class="profile"><a href="{%url 'users:profile'%}" id="profile-button" class="active">Profile</a></li>
+        <li><a href="{%url 'habits:habit_list'%}" id="habits-button">Habits</a></li>
+        <li><a href="{%url 'habit_notes:all_notes'%}" id="diagrams-button">Notes</a></li>
+    </ul>
+    <span class="logo" id="home-button" ><a href="{%url 'main:main_after_registration'%}">HabitFlow </a></span>
+    <ul class="right-nav">
+        <li><a href="{%url 'main:settings'%}" id="settings-button">Settings</a></li>
+        <li class="About"><a href="{%url 'main:about'%}" >About</a></li>
+    </ul>
     </nav>
   </header>
 </div>

@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    background: #2f0f05;
+    font-family: "Poppins", serif;
+    font-weight: 500;
+}
+
+a {
+    text-decoration: none; /* Убираем стандартное подчеркивание */
+    color: #000000; /* Цвет текста */
+    position: relative; /* Нужно для псевдоэлемента */
+}
+
+/* Подчеркивание при наведении */
+a:hover::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Расстояние от текста */
+    width: 100%;
+    height: 2px; /* Толщина подчеркивания */
+    background-color: #2f0f05; /* Бежевый цвет подчеркивания */
+}
+.about {
+    position: relative;
+}
+
+.wrapper {
+    background-color: #ffffff;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1400px;
+    margin: 0 auto;
+    padding: 0;
+    color: black;
+}
+
+header {
+    padding: 50px 0;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .left-nav,
+header .right-nav {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header .left-nav {
+    flex: 1;
+    justify-content: flex-start;
+    margin-left: -50px; /* Регулируйте значение, чтобы сместить левее */
+}
+
+header .right-nav {
+    flex: 1;
+    justify-content: flex-end;
+}
+.left-nav a.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #2f0f05; /* Бежевый цвет */
+}
+/* Фон страницы – салатовый */
+.wrapper_2{
+    margin: 0;
+    padding: 0;
+    background-color: #6A6F4C;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Белый контейнер по центру */
+.container_2 {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    height: 500px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Заголовок */
+.container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Ссылка для добавления заметки */
+.add-note {
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #5E2611;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.add-note:hover {
+    border-bottom: 2px solid #5E2611;
+}
+
+/* Сообщение о том, что заметок нет */
+.no-notes {
+    color: #888;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Сообщение о том, что привычек нет */
+.no-habits {
+    color: #333;
+    font-size: 1rem;
+}

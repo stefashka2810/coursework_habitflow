@@ -13,15 +13,14 @@
     <header class="container">
         <nav>
             <ul class="left-nav">
-                <li class="profile"><a href="#" id="profile-button">Profile</a></li>
-                <li><a href="#" id="habits-button">Habit</a></li>
-                <li><a href="#" id="diagrams-button">Diagrams</a></li>
+                <li class="profile"><a href="{%url 'users:profile'%}" id="profile-button">Profile</a></li>
+                <li><a href="{%url 'habits:habit_list'%}" id="habits-button">Habits</a></li>
+                <li><a href="{%url 'habit_notes:all_notes'%}" id="diagrams-button">Notes</a></li>
             </ul>
-            <!-- ЛОГОТИП HabitFlow, теперь работает как кнопка -->
-            <span class="logo" id="home-button">HabitFlow</span>
+            <span class="logo" id="home-button" ><a href="{%url 'main:main_after_registration'%}">HabitFlow </a></span>
             <ul class="right-nav">
-                <li><a href="#" id="settings-button">Settings</a></li>
-                <li class="About"><a href="about.html" class="active">About</a></li>
+                <li><a href="{%url 'main:settings'%}" id="settings-button">Settings</a></li>
+                <li class="About"><a href="{%url 'main:about'%}" class="active">About</a></li>
             </ul>
         </nav>
     </header>
@@ -43,47 +42,6 @@
         <img src="{% static 'img/sofia.svg' %}" alt="">
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const profileButton = document.getElementById("profile-button");
-        const habitsButton = document.getElementById("habits-button");
-        const diagramsButton = document.getElementById("diagrams-button");
-        const settingsButton = document.getElementById("settings-button");
-        const homeButton = document.getElementById("home-button");
-
-        if (!user) {
-            // Если пользователь не зарегистрирован, все кнопки ведут на страницу входа
-            profileButton.addEventListener("click", () => window.location.href = "registration.html");
-            habitsButton.addEventListener("click", () => window.location.href = "registration.html");
-            diagramsButton.addEventListener("click", () => window.location.href = "registration.html");
-            settingsButton.addEventListener("click", () => window.location.href = "registration.html");
-
-            // Логотип HabitFlow ведет на страницу "до входа"
-            homeButton.addEventListener("click", () => window.location.href = "main_before_registration.html");
-
-        } else {
-            // Если пользователь вошел в систему
-            profileButton.addEventListener("click", () => window.location.href = "profile.html");
-
-            // Проверяем, есть ли привычки у пользователя
-            let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
-            habitsButton.addEventListener("click", function () {
-                if (userHabits.length > 0) {
-                    window.location.href = "list_habitats.html"; // Если есть привычки
-                } else {
-                    window.location.href = "habitat_without_value.html"; // Если привычек нет
-                }
-            });
-
-            settingsButton.addEventListener("click", () => window.location.href = "settings.html");
-
-            // Логотип HabitFlow ведет на главную после входа
-            homeButton.addEventListener("click", () => window.location.href = "main_after_registration.html");
-        }
-    });
-</script>
 
 </body>
 </html>

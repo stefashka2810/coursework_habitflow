@@ -1,0 +1,11 @@
+
+<h2>Добавить заметку к привычке: {{ habit.name }}</h2>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+<a href="{% url 'habit_notes:all_notes'%}">← Назад к заметкам</a>
+

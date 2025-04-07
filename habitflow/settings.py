@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'main',
     'habits',
     'users',
+    'habit_notes',
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,5 @@ EMAIL_HOST_USER = 'sofi.beznosenkova@yandex.ru'
 EMAIL_HOST_PASSWORD = 'hvixvzqiuyemskek'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

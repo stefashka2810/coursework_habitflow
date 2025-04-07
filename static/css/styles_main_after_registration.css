@@ -194,17 +194,14 @@ footer {
     font-size: 0.8rem;
 }
 
-/*.habit-icons {*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    gap: 100px;*/
-/*    margin-top: 20px;*/
-/*}*/
-/*.habit-item {*/
-/*    text-align: center;*/
-/*    max-width: 150px;*/
-/*}*/
-/*.habit-item img {*/
-/*    width: 100px;*/
-/*    height: auto;*/
-/*}*/
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
