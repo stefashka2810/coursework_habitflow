@@ -55,61 +55,7 @@
   <p class="motivation-text">Achieve your goals and become the best version of yourself!</p>
 </div>
 
-{% comment %} <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const profileGreeting = document.getElementById("profile-greeting");
-    const habitsList = document.getElementById("habits-list");
-    const noHabitsMessage = document.getElementById("no-habits-message");
-    const addHabitBtn = document.getElementById("add-habit-btn");
-    const habitsButton = document.getElementById("habits-button");
-    const homeButton = document.getElementById("home-button"); // Добавляем обработчик клика для логотипа
 
-    // Проверяем, есть ли пользователь
-    if (!user) {
-      alert("You need to register first!");
-      window.location.href = "registration.html";
-      return;
-    }
-
-    // Устанавливаем приветствие
-    profileGreeting.textContent = `Hello, ${user.firstName} ${user.lastName}!`;
-
-    // Загружаем привычки конкретного пользователя из localStorage
-    let userHabits = JSON.parse(localStorage.getItem(`habits_${user.email}`)) || [];
-
-    if (userHabits.length > 0) {
-      habitsList.innerHTML = ""; // Очищаем список перед добавлением новых элементов
-
-      userHabits.forEach(habit => {
-        let listItem = document.createElement("li");
-        listItem.textContent = habit.name; // Выводим только название привычки
-        habitsList.appendChild(listItem);
-      });
-
-      noHabitsMessage.style.display = "none";
-      addHabitBtn.style.display = "none";
-    } else {
-      noHabitsMessage.style.display = "block";
-      addHabitBtn.style.display = "block";
-    }
-
-    // Добавляем обработчик на кнопку "Habit"
-    habitsButton.addEventListener("click", function (event) {
-      event.preventDefault();
-      if (userHabits.length > 0) {
-        window.location.href = "list_habitats.html"; // Если есть привычки
-      } else {
-        window.location.href = "habitat_without_value.html"; // Если привычек нет
-      }
-    });
-
-    // Добавляем обработчик на логотип "HabitFlow"
-    homeButton.addEventListener("click", function () {
-      window.location.href = "main_after_registration.html";
-    });
-  });
-</script> {% endcomment %}
 
 </body>
 </html>

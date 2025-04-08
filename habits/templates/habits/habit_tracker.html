@@ -13,17 +13,14 @@
   <p>From {{ habit.get_start_date }} to {{ habit.end_date }} | Frequency: {{ habit.frequency }}</p>
   <p>{{ habit.description }}</p>
 
-  <!-- Трекер привычки -->
   <div class="habit-tracker">
     {% for day_date in dates_list %}
       {% if day_date in completed_dates %}
-        <!-- Если день есть в completed_dates, выводим закрашенный кружок -->
         <div 
           class="tracker-circle completed" 
           data-date="{{ day_date|date:'Y-m-d' }}">
         </div>
       {% else %}
-        <!-- Иначе кружок будет пустым -->
         <div 
           class="tracker-circle"
           data-date="{{ day_date|date:'Y-m-d' }}">
@@ -38,16 +35,14 @@
 {% csrf_token %}
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  // Ищем все кружочки
+  
   document.querySelectorAll('.tracker-circle').forEach(function(circle) {
     circle.addEventListener('click', function() {
       const circleElem = this;
       const dateValue = circleElem.getAttribute('data-date');
 
-      // Определяем, будет ли кружок «закрашен» после клика
       const willBeCompleted = !circleElem.classList.contains('completed');
 
-      // Шлём запрос на сервер, чтобы сохранить новое состояние
       fetch("{% url 'habits:toggle_completion' habit.id %}", {
         method: "POST",
         headers: {
@@ -62,7 +57,6 @@ document.addEventListener("DOMContentLoaded", function() {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          // Если сервер всё сохранил, меняем класс, и кружок окрашивается/снимается
           circleElem.classList.toggle('completed');
         } else {
           alert(data.error);

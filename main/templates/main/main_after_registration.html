@@ -19,53 +19,53 @@
       <span class="logo" id="home-button" ><a href="{%url 'main:main_after_registration'%}">HabitFlow </a></span>
       <ul class="right-nav">
           <li><a href="{%url 'main:settings'%}" id="settings-button">Settings</a></li>
-          <li class="About"><a href="{%url 'main:about'%}" >About</a></li>
+          <li class="About"><a href="{%url 'main:about'%}" class="active">About</a></li>
       </ul>
       </nav>
     </header>
   </div>
 
   <!-- Основной контент -->
-  <div class="hero-section">
+  <div class="hero-section animate-on-scroll">
     <h1>Thanks to us, you will not lose your motivation<br>
       and will be able to both instill healthy habits<br>
       and get rid of bad ones.</h1>
   </div>
 
   <!-- Блок полезных привычек -->
-  <div class="habits-container">
+  <div class="habits-container animate-on-scroll">
     <h2>People often want to instill useful habits.<br>
       Here are some commonly instilled habits, maybe you'll like some of them</h2>
   </div>
-  <div class="habit-icons">
+  <div class="habit-icons animate-on-scroll">
     <div class="habit-item">
       <img src="{% static 'img/water.svg'%}" alt="Drink water">
       <p>Drink water every day</p>
     </div>
-    <div class="habit-item">
+    <div class="habit-item animate-on-scroll">
       <img src="{% static 'img/gym.svg'%}" alt="Go to the gym">
       <p>Go to the gym every week</p>
     </div>
-    <div class="habit-item">
+    <div class="habit-item animate-on-scroll">
       <img src="{% static 'img/wake_up.svg'%}" alt="Wake up early">
       <p>Wake up early every day</p>
     </div>
   </div>
 
   <!-- Блок вредных привычек -->
-  <div class="habits-container">
+  <div class="habits-container animate-on-scroll">
     <h2>Some people get rid of bad habits</h2>
   </div>
-  <div class="habit-icons_1">
+  <div class="habit-icons_1 animate-on-scroll">
     <div class="habit-item">
       <img src="{% static 'img/smoking.svg'%}" alt="Smoking">
       <p>Smoking</p>
     </div>
-    <div class="habit-item">
+    <div class="habit-item animate-on-scroll">
       <img src="{% static 'img/sweets.svg'%}" alt="Eat a lot of sweets">
       <p>Eat a lot of sweets</p>
     </div>
-    <div class="habit-item">
+    <div class="habit-item animate-on-scroll">
       <img src="{% static 'img/game.svg'%}" alt="Gambling addiction">
       <p>Gambling addiction</p>
     </div>
@@ -112,3 +112,36 @@
 
   </body>
   </html>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const observerOptions = {
+            threshold: 0.1 // элемент считается видимым, если его 10% на экране
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target); // прекращаем наблюдение после появления
+                }
+            });
+        }, observerOptions);
+
+        // выбираем все элементы, которым нужно применить анимацию
+        const animateElements = document.querySelectorAll('.animate-on-scroll');
+        animateElements.forEach(el => observer.observe(el));
+    });
+</script>
+<style>
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  /* При добавлении класса in-view элемент становится видимым и возвращается в исходное положение */
+  .animate-on-scroll.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

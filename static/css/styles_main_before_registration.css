@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+/* Запрещаем горизонтальное прокручивание */
 body {
     overflow-x: hidden;
     font-family: "Poppins", sans-serif;
@@ -25,7 +27,7 @@ img {
 }
 
 .container {
-    width: 100%;
+    width: 1400px;
     margin: 0 auto;
     padding: 0;
     color: black;
@@ -37,6 +39,7 @@ header {
 
 header nav {
     display: flex;
+    padding: 10px 0;
     align-items: center;
     justify-content: space-between;
 }
@@ -134,7 +137,7 @@ header nav ul li:not(.bth) a:hover {
 .hero--info h3 {
     margin-top: 5px; 
     margin-bottom: 15px; 
-    font-size: x-larger;
+    font-size: x-large;
 }
 .hero-container img {
     margin-top: 20px;
@@ -475,12 +478,14 @@ header nav ul li:not(.bth) a:hover {
     margin: 0; /* Убираем дополнительные отступы заголовка */
 }
 
+/* Элементы изначально смещены вниз и невидимы */
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
+/* При добавлении класса in-view элемент становится видимым и возвращается в исходное положение */
 .animate-on-scroll.in-view {
     opacity: 1;
     transform: translateY(0);

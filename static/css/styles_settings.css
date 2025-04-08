@@ -6,7 +6,6 @@ html, body {
     height: 100%;
 }
 body {
-    display: flex;
     /* flex-direction: column; */
     background: #F0E4DF;
     font-family: "Poppins", serif;

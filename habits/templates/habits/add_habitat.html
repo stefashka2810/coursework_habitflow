@@ -49,7 +49,7 @@
             <input type="text" class="form-control" id="id_description"
                    value="{% if form.description.value %}{{ form.description.value }}{% endif %}"
                    name="description"
-                   placeholder="Describe habit" required>
+                   placeholder="Describe habit">
             {% if form.description.errors %}
               <div class="alert alert-danger alert-dismissible fade show">
                 {{ form.description.errors }}

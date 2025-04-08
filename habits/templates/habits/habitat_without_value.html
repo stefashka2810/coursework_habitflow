@@ -28,7 +28,7 @@
 <div class="container_2">
   <h1>You don't have any habits right now!</h1>
   <h2>Add them now!</h2>
-  <button class="add-habit" onclick="window.location.href='add_habitat.html'">
+  <button id="add-habit" onclick="window.location.href='{% url 'habits:create_habit' %}'">
     Add habit
   </button>
 

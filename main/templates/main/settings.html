@@ -13,14 +13,14 @@
   <header class="container_1">
     <nav>
       <ul class="left-nav">
-        <li class="profile"><a href="{%url 'users:profile'%}" id="profile-button">Profile</a></li>
+        <li><a href="{%url 'users:profile'%}">Profile</a></li>
         <li><a href="{%url 'habits:habit_list'%}" id="habits-button">Habits</a></li>
-        <li><a href="{%url 'habit_notes:all_notes'%}" id="diagrams-button">Notes</a></li>
+        <li><a href="{%url 'habit_notes:all_notes'%}" >Notes</a></li>
     </ul>
     <span class="logo" id="home-button" ><a href="{%url 'main:main_after_registration'%}">HabitFlow </a></span>
     <ul class="right-nav">
-        <li><a href="{%url 'main:settings'%}" id="settings-button" class="active">Settings</a></li>
-        <li class="About"><a href="{%url 'main:about'%}" >About</a></li>
+        <li class="settings" ><a href="{%url 'main:settings'%}" class="active">Settings</a></li>
+        <li><a href="{%url 'main:about'%}" >About</a></li>
     </ul>
     </nav>
   </header>
@@ -66,6 +66,15 @@
   </div>
 </div>
 <style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #F0E4DF;
+    font-family: "Poppins", serif;
+    font-weight: 600;
+}
+
   .modal-overlay {
     position: fixed;
     top: 0;

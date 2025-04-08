@@ -1,11 +1,105 @@
+{% load static %}
 
-<h2>Добавить заметку к привычке: {{ habit.name }}</h2>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add note</title>
+    <link rel="stylesheet" href="{% static 'css/styles_note_form.css' %}">
+</head>
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
+<body>
+    <div class="container">
+        <h2>Add note to habit: {{ habit.name }}</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
 
-<a href="{% url 'habit_notes:all_notes'%}">← Назад к заметкам</a>
+            <div class="input-group">
+                <label for="id_date">Date:</label>
+                <input type="date" class="form-control" id="id_date" 
+                value="{% if form.date.value %}{{ form.date.value }}{% endif %}"
+                name="date"
+                required>
+            </div>
+            
+            <div class="input-group">
+                <label for="note">Note:</label>
+                <textarea id="note"
+                value="{% if form.note.value %}{{ form.note.value }}{% endif %}"
+                name="note" 
+                placeholder="Enter a note" 
+                required></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="photo">Photo:</label>
+            
+                <input type="file" id="photo" name="photo" accept="image/*" class="file-input">
+                <label for="photo" class="file-button">Add file</label>
+                <span id="file-name" class="file-name">No file selected</span>
+              </div>
+
+            <div class="input-group">
+                <label for="mood">Mood:</label>
+                <select id="mood" 
+                name="mood" 
+                value="{% if form.mood.value %}{{ form.mood.value }}{% endif %}"
+                placeholder="Choose mood" 
+                required>
+                    <option value="" disabled selected></option>
+                    <option value="happy">😊 Happy</option>
+                    <option value="neutral">😐 Neutral</option>
+                    <option value="sad">😞 Sad</option>
+                    <option value="angry">😠 Angry</option>
+                    <option value="tired">😩 Tired</option>
+                </select>
+            </div>
+
+            <button type="submit">Save</button>
+        </form>
+        <a class="back-link" href="{% url 'habit_notes:all_notes'%}">← Back to notes</a>
+    </div>
+    <style>
+        .file-input {
+            display: none;
+          }
+          
+          .file-button {
+            display: inline-block;
+            background-color: #5c2b0d;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+          }
+          
+          .file-button:hover {
+            background-color: #421f08;
+          }
+          
+          .file-name {
+            margin-left: 15px;
+            font-style: italic;
+            color: #666;
+          }
+          
+    </style>
+    <script>
+        const fileInput = document.getElementById("photo");
+        const fileNameSpan = document.getElementById("file-name");
+      
+        fileInput.addEventListener("change", function () {
+          if (fileInput.files.length > 0) {
+            fileNameSpan.textContent = fileInput.files[0].name;
+          } else {
+            fileNameSpan.textContent = "No file selected";
+          }
+        });
+      </script>
+      
+    </body>
+    </html>
 

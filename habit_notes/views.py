@@ -16,7 +16,14 @@ def add_note(request, habit_id):
             note = form.save(commit=False)
             note.habit = habit
             note.save()
-            return redirect('habit_notes:note_list', habit_id=habit.id)
+            return redirect('habit_notes:all_notes')
     else:
         form = HabitNoteForm()
     return render(request, 'habit_notes/note_form.html', {'form': form, 'habit': habit})
+
+def delete_note(request, note_id):
+    note = get_object_or_404(HabitNote, id=note_id)
+
+    if request.method == 'POST':
+        note.delete()
+        return redirect('habit_notes:all_notes') 

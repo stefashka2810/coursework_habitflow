@@ -30,18 +30,67 @@
     <div class="flower_left">
         <img src="{% static 'img/flowers_2.svg' %}" alt="">
     </div>
-    <h1>Nice to meet you!</h1>
-    <h2>Our names are Sophia and Stefania!</h2>
-    <h3>We are students and we want to help you track your habits</h3>
-    <h4>That is why we created this website</h4>
-    <p>&copy; 2025 HabitFlow. All rights reserved.</p>
+    <h1 class="type-effect">Nice to meet you!</h1>
+    <h2 class="type-effect">Our names are Sophia and Stefania!</h2>
+    <h3 class="type-effect">We are students and we want to help you track your habits</h3>
+    <h4 class="type-effect">That is why we created this website</h4>
+    <p class="type-effect">&copy; 2025 HabitFlow. All rights reserved.</p>
     <div class="flower_right">
         <img src="{% static 'img/flowers_2.svg' %}" alt="">
     </div>
-    <div class="sofia">
+    {% comment %} <div class="sofia">
         <img src="{% static 'img/sofia.svg' %}" alt="">
-    </div>
+    </div> {% endcomment %}
 </div>
 
 </body>
 </html>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rotatingImages = document.querySelectorAll(".flower_left img, .flower_right img");
+    
+        rotatingImages.forEach(img => {
+            let angle = 0;
+            setInterval(() => {
+                angle = (angle + 1) % 360;
+                img.style.transform = `rotate(${angle}deg)`;
+            }, 20);
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const typingSpeed = 50;
+        const delayBetweenElements = 500;
+    
+        const elements = Array.from(document.querySelectorAll('.type-effect'));
+    
+        elements.forEach(el => {
+            el.dataset.fullText = el.textContent;
+            el.textContent = "";
+        });
+    
+        function typeEffect(el, callback) {
+            const text = el.dataset.fullText;
+            let i = 0;
+            const interval = setInterval(() => {
+                el.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, typingSpeed);
+        }
+    
+        function typeElements(index = 0) {
+            if (index < elements.length) {
+                typeEffect(elements[index], () => {
+                    setTimeout(() => {
+                        typeElements(index + 1);
+                    }, delayBetweenElements);
+                });
+            }
+        }
+        typeElements();
+    });
+</script>

@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Базовый сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #5E2611; /* Коричневый фон */
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Белый контейнер по центру */
+.container {
+    background-color: #fff;
+    width: 90%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Заголовок карточки */
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Группа ввода для полей */
+.input-group {
+    margin-bottom: 15px;
+}
+
+/* Метки для полей */
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Текстовое поле для заметки */
+.input-group textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+/* Ярлык-кнопка для загрузки файла */
+.file-button {
+    display: inline-block;
+    background-color: #5E2611;
+    color: #fff !important;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.file-button:hover {
+    background-color: #7a3a23;
+}
+
+/* Поле выбора настроения, увеличенное */
+.input-group select {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 1px solid #aaaaaa;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+/* Кнопка "Сохранить" */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    background-color: #5E2611;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: #7a3a23;
+}
+
+/* Ссылка "← Назад к заметкам" */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #5E2611;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #7a3a23;
+}
+
+

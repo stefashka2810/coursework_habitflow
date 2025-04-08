@@ -43,14 +43,49 @@
                 placeholder="Enter your password" 
                 required>
 
+                
+
                 <a href="{% url 'users:password_reset'%}" class="forgot-password">Forgot password?</a>
+                <br>
                 <button type="submit" class="login">Login</button>
                 <span class="or">or</span>
                 <a href="{% url 'users:registration' %}" class="register">Register</a>
+
+                
             </form>
         </div>
     </div>
 </div>
+<style>
+
+    .login,
+.register {
+    background-color: #5E2611;
+    color: white;
+    padding: 10px 20px;
+    width: 120px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    text-decoration: none;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.login:hover {
+    background-color: #9f3f20;
+}
+
+.register:hover {
+    background-color: #705d5c;
+}
+
+</style>
 <script src="{% static 'script_registration.js' %}"></script>
 </body>
 </html>
