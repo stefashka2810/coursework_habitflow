@@ -6,8 +6,9 @@ from .forms import HabitNoteForm
 
 def all_notes_view(request):
     habits = Habit.objects.filter(user=request.user).prefetch_related('notes')
-    return render(request, 'habit_notes/all_notes.html', {'habits': habits})
-
+    if(habits): return render(request, 'habit_notes/all_notes.html', {'habits': habits})
+    else: return render(request, 'habits/habitat_without_value.html')
+ 
 def add_note(request, habit_id):
     habit = get_object_or_404(Habit, id=habit_id, user=request.user)
     if request.method == 'POST':
