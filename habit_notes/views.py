@@ -24,6 +24,10 @@ def add_note(request, habit_id):
 
 def delete_note(request, note_id):
     note = get_object_or_404(HabitNote, id=note_id)
+    
+    # Проверяем, принадлежит ли заметка текущему пользователю
+    if note.habit.user != request.user:
+        return redirect('habit_notes:all_notes')
 
     if request.method == 'POST':
         note.delete()
