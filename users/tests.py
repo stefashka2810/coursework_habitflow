@@ -16,7 +16,6 @@ class UserModelTests(TestCase):
         self.user = User.objects.create_user(**self.user_data)
 
     def test_user_creation(self):
-        """Test that a user can be created"""
         self.assertEqual(User.objects.count(), 1)
         self.assertEqual(self.user.username, self.user_data['username'])
         self.assertEqual(self.user.email, self.user_data['email'])
@@ -25,17 +24,14 @@ class UserModelTests(TestCase):
         self.assertTrue(self.user.check_password(self.user_data['password']))
 
     def test_email_unique(self):
-        """Test that users with duplicate emails cannot be created"""
         duplicate_user_data = self.user_data.copy()
         duplicate_user_data['username'] = 'anotheruser'
         with self.assertRaises(IntegrityError):
             User.objects.create_user(**duplicate_user_data)
 
     def test_get_display_name(self):
-        """Test the get_display_name method"""
         self.assertEqual(self.user.get_display_name(), 'Test User')
         
-        # Test with empty first_name and last_name
         user_no_name = User.objects.create_user(
             username='noname',
             email='noname@example.com',
@@ -44,6 +40,5 @@ class UserModelTests(TestCase):
         self.assertEqual(user_no_name.get_display_name(), 'noname')
 
     def test_str_method(self):
-        """Test the __str__ method"""
         expected_str = f'Test User (test@example.com)'
         self.assertEqual(str(self.user), expected_str)

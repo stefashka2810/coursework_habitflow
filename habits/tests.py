@@ -26,7 +26,6 @@ class HabitModelTests(TestCase):
         self.habit = Habit.objects.create(**self.habit_data)
 
     def test_habit_creation(self):
-        """Test that a habit can be created"""
         self.assertEqual(Habit.objects.count(), 1)
         self.assertEqual(self.habit.name, self.habit_data['name'])
         self.assertEqual(self.habit.description, self.habit_data['description'])
@@ -38,12 +37,10 @@ class HabitModelTests(TestCase):
         self.assertIsNotNone(self.habit.updated_at)
 
     def test_str_method(self):
-        """Test the __str__ method"""
         expected_str = f'Test Habit (good)'
         self.assertEqual(str(self.habit), expected_str)
         
     def test_habit_with_different_categories(self):
-        """Test that habits can be created with different categories"""
         bad_habit = Habit.objects.create(
             user=self.user,
             name='Bad Habit',
@@ -57,7 +54,6 @@ class HabitModelTests(TestCase):
         self.assertEqual(str(bad_habit), 'Bad Habit (bad)')
         
     def test_habit_with_different_frequencies(self):
-        """Test that habits can be created with different frequencies"""
         frequencies = ['daily', 'weekly', 'biweekly', 'monthly', 'semiannual', 'yearly']
         
         for freq in frequencies:
@@ -96,19 +92,16 @@ class HabitCompletionModelTests(TestCase):
         )
 
     def test_completion_creation(self):
-        """Test that a habit completion can be created"""
         self.assertEqual(HabitCompletion.objects.count(), 1)
         self.assertEqual(self.completion.habit, self.habit)
         self.assertEqual(self.completion.date, self.today)
         self.assertTrue(self.completion.completed)
 
     def test_str_method(self):
-        """Test the __str__ method"""
         expected_str = f'Habit: Test Habit | {self.today} | Completed: True'
         self.assertEqual(str(self.completion), expected_str)
     
     def test_unique_together_constraint(self):
-        """Test that a habit can't have multiple completions for the same date"""
         with self.assertRaises(Exception):
             HabitCompletion.objects.create(
                 habit=self.habit,
@@ -117,7 +110,6 @@ class HabitCompletionModelTests(TestCase):
             )
     
     def test_update_completion_status(self):
-        """Test that a habit completion status can be updated"""
         self.completion.completed = False
         self.completion.save()
         

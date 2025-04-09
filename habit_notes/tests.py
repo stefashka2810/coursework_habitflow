@@ -38,7 +38,6 @@ class HabitNoteModelTests(TestCase):
         self.note = HabitNote.objects.create(**self.note_data)
 
     def test_habit_note_creation(self):
-        """Test that a habit note can be created"""
         self.assertEqual(HabitNote.objects.count(), 1)
         self.assertEqual(self.note.habit, self.habit)
         self.assertEqual(self.note.date, self.today)
@@ -48,12 +47,10 @@ class HabitNoteModelTests(TestCase):
         self.assertIsNotNone(self.note.created_at)
 
     def test_str_method(self):
-        """Test the __str__ method"""
         expected_str = f'Note for Test Habit on {self.today}'
         self.assertEqual(str(self.note), expected_str)
     
     def test_habit_note_with_different_moods(self):
-        """Test that notes can be created with different moods"""
         moods = ['happy', 'neutral', 'sad', 'angry', 'tired']
         
         for idx, mood in enumerate(moods):
@@ -67,7 +64,6 @@ class HabitNoteModelTests(TestCase):
             self.assertEqual(note.mood, mood)
     
     def test_note_without_mood(self):
-        """Test that notes can be created without mood"""
         note = HabitNote.objects.create(
             habit=self.habit,
             date=self.today - timedelta(days=7),
@@ -77,8 +73,6 @@ class HabitNoteModelTests(TestCase):
         self.assertEqual(note.mood, '')
     
     def test_habit_note_ordering(self):
-        """Test that habit notes are ordered by date in descending order"""
-        # Create two more notes with different dates
         yesterday = self.today - timedelta(days=1)
         tomorrow = self.today + timedelta(days=1)
         
@@ -100,13 +94,10 @@ class HabitNoteModelTests(TestCase):
         self.assertEqual(notes[2].date, yesterday)
     
     def test_habit_note_with_photo(self):
-        """Test that notes can include a photo"""
-        # Create a temporary image file
         with tempfile.NamedTemporaryFile(suffix='.jpg') as temp_img:
             temp_img.write(b'dummy image content')
             temp_img.seek(0)
             
-            # Create a note with a photo
             photo_note = HabitNote.objects.create(
                 habit=self.habit,
                 date=self.today - timedelta(days=10),
@@ -120,6 +111,5 @@ class HabitNoteModelTests(TestCase):
             
             self.assertIsNotNone(photo_note.photo)
             
-            # Clean up the uploaded file
             if photo_note.photo and os.path.isfile(photo_note.photo.path):
                 os.remove(photo_note.photo.path)

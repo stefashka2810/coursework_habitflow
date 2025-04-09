@@ -27,4 +27,7 @@ def delete_note(request, note_id):
 
     if request.method == 'POST':
         note.delete()
-        return redirect('habit_notes:all_notes') 
+        return redirect('habit_notes:all_notes')
+    
+    # Обработка GET-запросов
+    return redirect('habit_notes:all_notes') 
