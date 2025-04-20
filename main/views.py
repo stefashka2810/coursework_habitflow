@@ -6,6 +6,9 @@ def index(request):
 def about(request):
     return render(request, 'main/about.html')
 
+def about_us(request):
+    return render(request, 'main/about_us.html')
+
 def settings(request):
     return render(request, 'main/settings.html', {'user_obj': request.user})
 
