@@ -130,7 +130,7 @@ header .right-nav {
 .motivation-text {
     margin-left: 800px;
 }
-#add-habit-btn {
+.add-habit-btn {
     text-transform: none;
     background-color: #5E2611; /* Темно-красный цвет */
     color: white; /* Белый текст */
